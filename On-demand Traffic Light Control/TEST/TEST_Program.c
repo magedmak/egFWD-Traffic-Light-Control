@@ -80,7 +80,7 @@ void LED_Test(void){
  * This function is used to test External Interrupt and Button drivers functions.
  * The test is using 1 LED connected to PIN0 in PORTA and button connected to PIN3 in PORTD
  * with pull-up resistance. When the button is pressed, the pin is connected to ground
- * and interrupt fires its flag and turns the LED on while pressing.
+ * and interrupt fires its flag and turns the LED on.
  * Arguments: void
  * Return value: void
  */
