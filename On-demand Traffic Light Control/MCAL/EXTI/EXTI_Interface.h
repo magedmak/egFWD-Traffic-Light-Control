@@ -68,5 +68,6 @@ void INT_VECT(void)
 // EXTI function prototypes
 void EXTI_Init(uint8_t LOC_U8INTx, EN_InterruptSense_t LOC_U8INT_SENSE);
 void EXTI_ChooseISC(uint8_t LOC_U8INTx, EN_InterruptSense_t LOC_U8INT_SENSE);
+uint8_t EXTI_IsFired(uint8_t interruptNumber);
 
 #endif
