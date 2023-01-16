@@ -1,8 +1,13 @@
+![Cover](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/61e3cadeb2547706e1f7a718cb778d279314bdab/Photos/Cover.png)
+
 # On-demand Traffic Light Control
 This repository contains the source code and simulation for an **on-demand traffic light control** program. The program simulates a traffic light for cars and pedestrians using LEDs and a button. The program uses 6 LEDs for cars and pedestrians, and uses a timer to control the duration of the different light states (green, yellow, red). The program also has a button that allows the user to switch between normal mode, where the traffic light follows a normal sequence, and pedestrian mode, where the traffic light sequence is adjusted to allow pedestrians to cross the road.
 
 ## System Design
 The system design of the on-demand traffic light control system is based on an ATMEGA32a microcontroller and utilizes LEDs and a button to simulate a traffic light for cars and pedestrians. The system uses different LEDs for cars and pedestrians, and uses a timer to control the duration of the different light states (green, yellow, red).
+
+![System Circuit](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/61e3cadeb2547706e1f7a718cb778d279314bdab/Photos/System%20circuit.png)
+
 The system includes several components:
 -	6 LEDs: The system uses different LEDs to indicate the different traffic light states for cars and pedestrians. Green LEDs indicate a green light, yellow LEDs indicate a yellow light, and red LEDs indicate a red light.
 -	1 Button: The system uses a button to switch between normal mode and pedestrian mode connected to PIN 2 in PORTD.
@@ -34,7 +39,16 @@ The electronic control unit abstraction layer is the middle layer and it contain
 The microcontroller abstraction layer is the lowest layer and it contains the code for the different drivers such as general purpose intput/output driver (GPIO), external interrupt driver (EXTI), and timer driver. This layer handles the communication between the ECU layer and the physical hardware.
 The layered architecture allows for a clear separation of concerns and makes it easier to develop, test, and maintain the code. It also improves the flexibility of the system, as it can be easily ported to other microcontroller platforms by only modifying the hardware layer. Furthermore, the layered architecture allows for the easy integration of new features or functions, as they can be added to the appropriate layer without affecting the other layers.
 
-## Report
+## System Flowchart
+![Flowchart](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/61e3cadeb2547706e1f7a718cb778d279314bdab/Photos/Flowchart.png)
+
+## Timer Configuaration
+In order to change the 5 seconds delay, change the initial value and number of overflows in TMR0_Config.h file.
+The calculations were as following to generate 5 seconds delay:
+
+![Calculations](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/6e3d5bf81b0ff6b0171e5185e6015f5e1baa0e4c/Photos/Calculations.png)
+
+## Project Report
 A detailed report about the on-demand traffic light control system is provided in this section. The report includes the following sections:
 - **System Design and Description**: This section provides a detailed explanation of the overall system design and functionality, including the purpose of the system, the components used, and the different modes of operation.
 - **Flowchart**: This section includes a flowchart that illustrates the traffic light sequence in both normal mode and pedestrian mode.
