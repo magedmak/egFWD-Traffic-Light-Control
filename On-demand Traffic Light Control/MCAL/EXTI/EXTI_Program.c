@@ -72,3 +72,13 @@ void EXTI_ChooseISC(uint8_t LOC_U8INTx, EN_InterruptSense_t LOC_U8INT_SENSE){
         }
     }
 }
+
+/*
+ * Function: EXTI_IsFired()
+ * Description: This function is used to check if the interrupt flag is fired
+ * Arguments: interruptNumber is the bit of a specific interrupt
+ * Return value: void
+ */
+uint8_t EXTI_IsFired(uint8_t interruptNumber){
+	return GET_BIT(GIFR, interruptNumber);
+}
