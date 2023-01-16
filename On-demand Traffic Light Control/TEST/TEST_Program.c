@@ -85,12 +85,16 @@ void LED_Test(void){
  * Return value: void
  */
 void EXTI_Test(void){
+	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
+	TMR0_InitNormalMode(&timerConfig_5sec);
 	GPIO_SetPinDir(PORTA, PIN0, OUTPUT);
 	EXTI_Init(INT1, LOW_LEVEL);
 	BUTTON_Init(PORTD, PIN3);
 	while(1){
-		GPIO_SetPinVal(PORTA, PIN0, LOW);
-		if(flag) GPIO_SetPinVal(PORTA, PIN0, HIGH);
+		while(!flag) GPIO_SetPinVal(PORTA, PIN0, LOW);
+		GPIO_SetPinVal(PORTA, PIN0, HIGH);
+		TMR0_Delay(&timerConfig_5sec);
+		flag = 0;
 	}
 }
 
