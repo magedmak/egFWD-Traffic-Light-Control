@@ -18,6 +18,7 @@
 #define BUTTON_INTERFACE_H
 
 #include "../../MCAL/GPIO/GPIO_Interface.h"
+#include "../../MCAL/EXTI/EXTI_Interface.h"
 
 void BUTTON_Init(uint8_t LOC_U8Port, uint8_t LOC_U8Pin);
 uint8_t BUTTON_IsPressed(uint8_t LOC_U8Port, uint8_t LOC_U8Pin);
