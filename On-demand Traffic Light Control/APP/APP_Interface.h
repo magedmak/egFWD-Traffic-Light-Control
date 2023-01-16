@@ -19,8 +19,6 @@
 #ifndef APP_INTERFACE_H_
 #define APP_INTERFACE_H_
 
-#include "../MCAL/TMR0/TMR0_Interface.h"
-#include "../MCAL/EXTI/EXTI_Interface.h"
 #include "../ECUAL/LED/LED_Interface.h"
 #include "../ECUAL/BUTTON/BUTTON_Interface.h"
 
