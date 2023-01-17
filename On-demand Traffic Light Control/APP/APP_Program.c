@@ -19,6 +19,7 @@
 #include "APP_Interface.h"
 
 ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
+ST_TimerConfig_t timerConfig_Halfsec = {INIT_VALUE_HALF_SEC, OVERFLOW_NUM_HALF_SEC, TMR_NORMAL, TMR_PRESCALER};
 EN_AppMode_t appMode;
 EN_LEDColor_t carLEDColor;
 
@@ -37,7 +38,7 @@ void APP_Init(void){
 	BUTTON_Init(PORTD, PIN2);
 	
 	// Initialize Timer (Normal mode)
-	TMR0_InitNormalMode(&timerConfig_5sec);
+	TMR0_InitNormalMode(&timerConfig_Halfsec);
 	
 	// Initialize INT0 to sense a rising edge 
 	EXTI_Init(INT0, RISING_EDGE);
@@ -51,7 +52,13 @@ void APP_Start(void){
 		case NORMAL:
 			/* 1. Car's green LED on for 5 seconds */
 			LED_On(PORTA, PIN2); // turn car's green LED on
-			TMR0_Delay(&timerConfig_5sec); // delay 5 seconds
+			LED_On(PORTB, PIN0); // turn pedestrian's red LED on
+			for(uint8_t i=0; i<10; i++){ 
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
+				
+				/* Check if button pressed and mode changed */
+				if(PEDESTRIAN == appMode) break;
+			}
 			LED_Off(PORTA, PIN2); // turn car's green LED off
 			LED_Off(PORTB, PIN0); // turn pedestrian's red LED off
 			
@@ -60,57 +67,81 @@ void APP_Start(void){
 			if(PEDESTRIAN == appMode) break;
 			
 			/* 2. Car's yellow LED blinks for 5 seconds */
-			LED_Blink(PORTA, PIN1, &timerConfig_5sec); // blink car's yellow LED for 5 sec
+			for(uint8_t i=0; i<10; i++){
+				if(0 == i%2){
+					LED_Blink(PORTA, PIN1); // toggle car's yellow LED
+					LED_Blink(PORTB, PIN1); // toggle pedestrian's yellow LED
+				}
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
+				
+				/* Check if button pressed and mode changed */
+				if(PEDESTRIAN == appMode) break;
+			}
 			LED_Off(PORTA, PIN1); // turn car's yellow LED off
-			LED_Off(PORTB, PIN0); // turn pedestrian's red LED off
+			LED_Off(PORTB, PIN1); // turn pedestrian's yellow LED off
 			
 			/* Check if button pressed and mode changed */
 			if(PEDESTRIAN == appMode) break;
 			
 			/* 3. Car's red LED on for 5 seconds */
 			LED_On(PORTA, PIN0); // turn car's red LED on
-			TMR0_Delay(&timerConfig_5sec); // delay 5 seconds
-			if(NORMAL == appMode) LED_Off(PORTA, PIN0); // turn car's red LED off
+			LED_On(PORTB, PIN2); // turn pedestrian's green LED on
+			for(uint8_t i=0; i<10; i++){
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
+				
+				/* Check if button pressed and mode changed */
+				if(PEDESTRIAN == appMode) break;
+			}
+			LED_Off(PORTA, PIN0); // turn car's red LED off
+			LED_Off(PORTB, PIN2); // turn pedestrian's green LED off
 			
 			/* Check if button pressed and mode changed */
 			if(PEDESTRIAN == appMode) break;
 			
 			/* 4. Car's yellow LED blinks for 5 seconds */
-			LED_Blink(PORTA, PIN1, &timerConfig_5sec); // blink car's yellow LED for 5 sec
+			for(uint8_t i=0; i<10; i++){
+				if(0 == i%2){
+					LED_Blink(PORTA, PIN1); // toggle car's yellow LED
+					LED_Blink(PORTB, PIN1); // toggle pedestrian's yellow LED
+				}
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
+							
+				/* Check if button pressed and mode changed */
+				if(PEDESTRIAN == appMode) break;
+			}
 			LED_Off(PORTA, PIN1); // turn car's yellow LED off
-			LED_Off(PORTB, PIN0); // turn pedestrian's red LED off
+			LED_Off(PORTB, PIN1); // turn pedestrian's yellow LED off
 		break;
 		
 		case PEDESTRIAN:
-			if(RED == carLEDColor){
-				LED_On(PORTA, PIN0); // turn car's red LED on
-				LED_On(PORTB, PIN2); // turn pedestrian's green LED on
-				TMR0_Delay(&timerConfig_5sec); // delay 5 seconds
-				LED_Off(PORTA, PIN0); // turn car's red LED off
-				LED_On(PORTB, PIN2); // turn pedestrian's green LED off
+			/* Car's and pedestrian's yellow LEDs blink for 5 seconds */
+			for(uint8_t i=0; i<10; i++){
+				if(0 == i%2){
+					LED_Blink(PORTA, PIN1); // toggle car's yellow LED
+					LED_Blink(PORTB, PIN1); // toggle pedestrian's yellow LED
+				}
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
 			}
-			else{
-				LED_TwoBlink(PORTA, PIN1, PORTB, PIN1, &timerConfig_5sec); // blink car's and pedestrian's yellow LEDs for 5 sec
-				LED_Off(PORTA, PIN1); // turn car's yellow LED off
-				LED_Off(PORTB, PIN1); // turn pedestrian's yellow LED off
-				
-				LED_On(PORTA, PIN0); // turn car's red LED on
-				LED_On(PORTB, PIN2); // turn pedestrian's green LED on
-				TMR0_Delay(&timerConfig_5sec); // delay 5 seconds
-				LED_Off(PORTA, PIN0); // turn car's red LED off
-				LED_On(PORTB, PIN2); // turn pedestrian's green LED off
-			}
+			LED_Off(PORTA, PIN1); // turn car's yellow LED off
+			LED_Off(PORTB, PIN1); // turn pedestrian's yellow LED off				
 			
+			/* Car's red and pedestrian's green LEDs are on for 5 seconds */
+			LED_On(PORTA, PIN0); // turn car's red LED on
 			LED_On(PORTB, PIN2); // turn pedestrian's green LED on
-			LED_TwoBlink(PORTA, PIN1, PORTB, PIN1, &timerConfig_5sec); // blink car's and pedestrian's yellow LEDs for 5 sec
-			LED_Off(PORTB, PIN2); // turn pedestrian's green LED off
+			for(uint8_t i=0; i<10; i++) TMR0_Delay(&timerConfig_Halfsec); // delay 5 seconds
+			LED_Off(PORTA, PIN0); // turn car's red LED off
+			
+			/* Car's and pedestrian's yellow LEDs blink for 5 seconds */
+			for(uint8_t i=0; i<10; i++){
+				if(0 == i%2){
+					LED_Blink(PORTA, PIN1); // toggle car's yellow LED
+					LED_Blink(PORTB, PIN1); // toggle pedestrian's yellow LED
+				}
+				TMR0_Delay(&timerConfig_Halfsec); // delay 0.5 second
+			}
 			LED_Off(PORTA, PIN1); // turn car's yellow LED off
 			LED_Off(PORTB, PIN1); // turn pedestrian's yellow LED off
-			
-			LED_On(PORTA, PIN2); // turn car's green LED on
-			LED_On(PORTB, PIN0); // turn pedestrian's red LED on
-			TMR0_Delay(&timerConfig_5sec); // delay 5 seconds
-			LED_Off(PORTB, PIN0); // turn pedestrian's red LED off
+			LED_Off(PORTB, PIN2); // turn pedestrian's green LED off
 			
 			/* Back to normal mode */
 			appMode = NORMAL;
@@ -119,14 +150,11 @@ void APP_Start(void){
 }
 
 ISR(EXTI0){
-	// Change the mode to pedestrian when the button is pressed
-	appMode = PEDESTRIAN;
-	
 	// Get the color of car's LED when the button is pressed
 	if(LED_IsOn(PORTA, PIN0)) carLEDColor = RED;
 	else if(LED_IsOn(PORTA, PIN2)) carLEDColor = GREEN;
 	else carLEDColor = YELLOW;
 	
-	if(RED == carLEDColor) LED_On(PORTB, PIN2); // turn pedestrian's green LED on
-	else LED_On(PORTB, PIN0); // turn pedestrian's red LED on		
+	// Change the mode to pedestrian when the button is pressed
+	if(RED != carLEDColor) appMode = PEDESTRIAN;
 }
