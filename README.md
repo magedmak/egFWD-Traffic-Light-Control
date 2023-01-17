@@ -43,8 +43,8 @@ The layered architecture allows for a clear separation of concerns and makes it 
 ![Flowchart](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/61e3cadeb2547706e1f7a718cb778d279314bdab/Photos/Flowchart.png)
 
 ## Timer Configuaration
-In order to change the 5 seconds delay, change the initial value and number of overflows in TMR0_Config.h file.
-The calculations were as following to generate 5 seconds delay:
+In order to change the 0.5 second delay, change the initial value and number of overflows in TMR0_Config.h file.
+The calculations were as following to generate 0.5 second delay:
 
 ![Calculations](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/fcb74d4e8cac2a6d854619e97d58b7baeb2f1748/Photos/Calculations.png)
 
