@@ -46,7 +46,7 @@ The layered architecture allows for a clear separation of concerns and makes it 
 In order to change the 5 seconds delay, change the initial value and number of overflows in TMR0_Config.h file.
 The calculations were as following to generate 5 seconds delay:
 
-![Calculations](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/6e3d5bf81b0ff6b0171e5185e6015f5e1baa0e4c/Photos/Calculations.png)
+![Calculations](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/fcb74d4e8cac2a6d854619e97d58b7baeb2f1748/Photos/Calculations.png)
 
 ## Project Report
 A detailed report about the on-demand traffic light control system is provided in this section. The report includes the following sections:
