@@ -6,7 +6,7 @@ This repository contains the source code and simulation for an **on-demand traff
 ## System Design
 The system design of the on-demand traffic light control system is based on an ATMEGA32a microcontroller and utilizes LEDs and a button to simulate a traffic light for cars and pedestrians. The system uses different LEDs for cars and pedestrians, and uses a timer to control the duration of the different light states (green, yellow, red).
 
-![System Circuit](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/ef385203df936fcbc9149249e8c005688ff52e55/Photos/Circuit.png)
+![System Circuit](https://github.com/magedmak/egFWD-Traffic-Light-Control/blob/c77d6f6baa7ae0a97ddd11235c3a25815e9386be/Photos/Circuit.png)
 
 The system includes several components:
 -	6 LEDs: The system uses different LEDs to indicate the different traffic light states for cars and pedestrians. Green LEDs indicate a green light, yellow LEDs indicate a yellow light, and red LEDs indicate a red light.
