@@ -15,6 +15,8 @@
 
 #include "TMR0_Interface.h"
 
+extern uint8_t interruptFlag; // used to check if the button pressed while the delay running
+
 /************************************************************************/
 /*                Initialization Functions                              */
 /************************************************************************/
@@ -30,7 +32,7 @@
  * The function sets the waveform generation mode bits in TCCR0 register according to the mode in the config struct.
  * Returns: void
  */
-void TMR0_InitNormalMode(ST_TimerConfig_t* config){
+void TMR0_Init(ST_TimerConfig_t* config){
     switch(config->mode){
 		case TMR_NORMAL:
 			CLR_BIT(TCCR0, WGM00);
