@@ -18,7 +18,6 @@
 
 #include "APP_Interface.h"
 
-ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
 ST_TimerConfig_t timerConfig_Halfsec = {INIT_VALUE_HALF_SEC, OVERFLOW_NUM_HALF_SEC, TMR_NORMAL, TMR_PRESCALER};
 EN_AppMode_t appMode;
 EN_LEDColor_t carLEDColor;
@@ -38,7 +37,7 @@ void APP_Init(void){
 	BUTTON_Init(PORTD, PIN2);
 	
 	// Initialize Timer (Normal mode)
-	TMR0_InitNormalMode(&timerConfig_Halfsec);
+	TMR0_Init(&timerConfig_Halfsec);
 	
 	// Initialize INT0 to sense a rising edge 
 	EXTI_Init(INT0, RISING_EDGE);
