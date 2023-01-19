@@ -24,16 +24,18 @@ uint8_t flag = 0;
  * Return value: void
  */
 void GPIO_Test(void){
+	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
+	TMR0_Init(&timerConfig_5sec);
 	GPIO_SetPinDir(PORTA, PIN0, OUTPUT);
 	while(1){
 		if(LOW == GPIO_GetPinVal(PORTA, PIN0)){
 			GPIO_ToggPin(PORTA, PIN0);
 		}
-		// _delay_ms(5000);
+		TMR0_Delay(&timerConfig_5sec);
 		if(HIGH == GPIO_GetPinVal(PORTA, PIN0)){
 			GPIO_ToggPin(PORTA, PIN0);
 		}
-		// _delay_ms(5000);
+		TMR0_Delay(&timerConfig_5sec);
 	}
 }
 
@@ -45,9 +47,9 @@ void GPIO_Test(void){
  * Return value: void
  */
 void TMR0_Test(void){
-	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
 	GPIO_SetPinDir(PORTA, PIN0, OUTPUT);
-	TMR0_InitNormalMode(&timerConfig_5sec);
+	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
+	TMR0_Init(&timerConfig_5sec);
 	while(1){
 		GPIO_ToggPin(PORTA, PIN0);
 		TMR0_Delay(&timerConfig_5sec);
@@ -64,14 +66,14 @@ void TMR0_Test(void){
  */
 void LED_Test(void){
 	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
+	TMR0_Init(&timerConfig_5sec);
 	LED_Init(PORTA, PIN0); // LED0
 	LED_Init(PORTA, PIN1); // LED1
 	while(1){
 		LED_On(PORTA, PIN1); 
-		if(LED_IsOn(PORTA, PIN1)) LED_Blink(PORTA, PIN0, &timerConfig_5sec); //
+		if(LED_IsOn(PORTA, PIN1)) LED_Blink(PORTA, PIN0); //
 		LED_Off(PORTA, PIN0);
 		LED_Off(PORTA, PIN1);
-		
 	}
 }
 
@@ -80,13 +82,13 @@ void LED_Test(void){
  * This function is used to test External Interrupt and Button drivers functions.
  * The test is using 1 LED connected to PIN0 in PORTA and button connected to PIN3 in PORTD
  * with pull-up resistance. When the button is pressed, the pin is connected to ground
- * and interrupt fires its flag and turns the LED on.
+ * and interrupt fires its flag and turns the LED on
  * Arguments: void
  * Return value: void
  */
 void EXTI_Test(void){
 	ST_TimerConfig_t timerConfig_5sec = {INIT_VALUE_5_SEC, OVERFLOW_NUM_5_SEC, TMR_NORMAL, TMR_PRESCALER};
-	TMR0_InitNormalMode(&timerConfig_5sec);
+	TMR0_Init(&timerConfig_5sec);
 	GPIO_SetPinDir(PORTA, PIN0, OUTPUT);
 	EXTI_Init(INT1, LOW_LEVEL);
 	BUTTON_Init(PORTD, PIN3);
