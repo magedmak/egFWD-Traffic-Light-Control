@@ -20,6 +20,7 @@
 #include "../../utils/BIT_MATH.h"
 #include "TMR0_Private.h"
 #include "TMR0_Config.h"
+#include "../EXTI/EXTI_Interface.h"
 
 // Waveform Generation Mode Bit
 #define WGM00 6
@@ -58,7 +59,7 @@ typedef struct {
 } ST_TimerConfig_t;
 
 // Timer function prototypes
-void TMR0_InitNormalMode(ST_TimerConfig_t* config);
+void TMR0_Init(ST_TimerConfig_t* config);
 void TMR0_Start(ST_TimerConfig_t* config);
 void TMR0_Stop(void);
 uint8_t TMR0_GetState(void);
